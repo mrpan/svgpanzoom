@@ -2,9 +2,11 @@
   "name": "svgpanzoom",
   "version": "1.0.0",
   "description": "svg pan and zoom",
-  "main": "index.js",
+  "main": "webpack.config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "watch": "webpack --watch"
   },
   "repository": {
     "type": "git",
@@ -20,5 +22,9 @@
   "bugs": {
     "url": "https://github.com/mrpan/svgpanzoom/issues"
   },
-  "homepage": "https://github.com/mrpan/svgpanzoom#readme"
+  "homepage": "https://github.com/mrpan/svgpanzoom#readme",
+  "devDependencies": {
+    "html-webpack-plugin": "^2.30.1",
+    "webpack": "^3.6.0"
+  }
 }
