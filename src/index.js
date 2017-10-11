@@ -13,6 +13,7 @@ function SVGPanZoom(options){
    this.mousedowny;
    this.mousemoving;
    this.groupElement;
+   this.speed=options.speed||0.065;
    if(typeof groupElement ==="string"){
       this.groupElement=document.getElementById(groupElement);
    }else if(groupElement instanceof SVGElement){
@@ -42,8 +43,8 @@ SVGPanZoom.prototype.on =function(type,listener){
    var element = this.element;
    if(type=="drag"){
       element.addEventListener("mousedown",this.mousedowned.bind(this))
-   }else{
-
+   }else if(type=="zoom"){
+       element.addEventListener("wheel",this.wheeled.bind(this));
    }
 }
 
@@ -59,7 +60,6 @@ SVGPanZoom.prototype.mousedowned=function(event){
 }
 
 SVGPanZoom.prototype.mousemoved=function(event){
-   console.log("move");
   if(!this.mousemoving){
       var  nowtransforms = transform.getTranslation(this.transformattr);
       var nowscale=transform.getScale(this.transformattr);
@@ -75,4 +75,32 @@ SVGPanZoom.prototype.mouseupped=function(event){
    window.removeEventListener("mouseup",this.mouseupped,true);
    window.removeEventListener("mousemove",this.mousemoved,true);
    
+}
+SVGPanZoom.prototype.wheeled=function(event){
+   var deltaY =event.deltaY;
+   var deltaX =event.deltaX;
+   var centerX = event.clientX;
+   var centerY = event.clientY;
+   var nowtransforms = transform.getTranslation(this.getTransformAttr());
+   var scale=transform.getScale(this.getTransformAttr());
+   if(deltaY<0){
+    var factor = 1+this.speed;
+    nowtransforms[0]= centerX - factor * (centerX - nowtransforms[0])
+    nowtransforms[1] = centerY - factor * (centerY - nowtransforms[1])
+    factor *=scale[0]
+    scale[0]=factor
+    //  console.log(nowtransforms);
+    // console.log((-centerX*(factor-1))+"======"+(-centerY*(factor-1)));
+    
+    var trans = "translate("+(nowtransforms[0])+","+(nowtransforms[1])+")scale("+factor+")";
+     this.groupElement.setAttribute("transform",trans);
+  }else{
+   var factor = 1-this.speed;
+    nowtransforms[0]= centerX - factor * (centerX - nowtransforms[0])
+    nowtransforms[1] = centerY - factor * (centerY - nowtransforms[1])
+    factor *=scale[0]
+    scale[0]=factor
+   var trans = "translate("+(nowtransforms[0])+","+(nowtransforms[1])+")scale("+factor+")";
+     this.groupElement.setAttribute("transform",trans);
+  }
 }

@@ -2,12 +2,14 @@
 * @Author: giserpan
 * @Date:   2017-09-28 14:15:53
 * @Last Modified by:   giserpan
-* @Last Modified time: 2017-09-30 11:51:45
+* @Last Modified time: 2017-10-11 11:09:47
 */
 
 var dom = svgpanzoom({
 	element: "limit-svg",
-	groupElement:"container"
+	groupElement:"container",
+	speed:0.065
 });
 dom.on("drag");
+dom.on("zoom");
 
