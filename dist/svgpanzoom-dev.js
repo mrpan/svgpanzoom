@@ -132,8 +132,8 @@ SVGPanZoom.prototype.mousedowned=function(event){
   this.mousedowny =event.clientY;
   this.mousemoved=this.mousemoved.bind(this);
   this.mouseupped=this.mouseupped.bind(this);
-  this.element.addEventListener("mousemove",this.mousemoved,true);
-  this.element.addEventListener("mouseup",this.mouseupped,true);
+  window.addEventListener("mousemove",this.mousemoved,true);
+  window.addEventListener("mouseup",this.mouseupped,true);
    this.mousemoving = false;
    this.transformattr = this.getTransformAttr();
 }
@@ -152,8 +152,8 @@ SVGPanZoom.prototype.mousemoved=function(event){
 SVGPanZoom.prototype.mouseupped=function(event){
   //  this.mousemoved=this.mousemoved.bind(this);
   // this.mouseupped=this.mouseupped.bind(this);
-   this.element.removeEventListener("mouseup",this.mouseupped,true);
-   this.element.removeEventListener("mousemove",this.mousemoved,true);
+   window.removeEventListener("mouseup",this.mouseupped,true);
+   window.removeEventListener("mousemove",this.mousemoved,true);
    
 }
 
