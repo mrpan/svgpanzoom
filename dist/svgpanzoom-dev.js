@@ -126,6 +126,7 @@ SVGPanZoom.prototype.on =function(type,listener){
    }else if(type=="zoom"){
        element.addEventListener("wheel",this.wheeled.bind(this));
    }
+   return this;
 }
 
 SVGPanZoom.prototype.mousedowned=function(event){
