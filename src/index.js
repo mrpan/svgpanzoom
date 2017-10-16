@@ -45,6 +45,8 @@ SVGPanZoom.prototype.on =function(type,listener){
       element.addEventListener("mousedown",this.mousedowned.bind(this))
    }else if(type=="zoom"){
        element.addEventListener("wheel",this.wheeled.bind(this));
+   }else if(type=="dbclick"){
+      element.addEventListener("dblclick",this.dbclicked.bind(this));
    }
    return this;
 }
@@ -104,4 +106,17 @@ SVGPanZoom.prototype.wheeled=function(event){
    var trans = "translate("+(nowtransforms[0])+","+(nowtransforms[1])+")scale("+factor+")";
      this.groupElement.setAttribute("transform",trans);
   }
+}
+SVGPanZoom.prototype.dbclicked=function(event){
+  var centerX =event.clientX;
+  var centerY =event.clientY;
+   var nowtransforms = transform.getTranslation(this.getTransformAttr());
+   var scale=transform.getScale(this.getTransformAttr());
+    var factor = 1+this.speed*5;
+    nowtransforms[0]= centerX - factor * (centerX - nowtransforms[0])
+    nowtransforms[1] = centerY - factor * (centerY - nowtransforms[1])
+    factor *=scale[0]
+    scale[0]=factor;
+     var trans = "translate("+(nowtransforms[0])+","+(nowtransforms[1])+")scale("+factor+")";
+     this.groupElement.setAttribute("transform",trans);
 }
